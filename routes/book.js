@@ -45,13 +45,6 @@ router.post('/autocomplete', async (req,res)=>{
 
 router.post('/NewBook', async (req, res) => {
 	const {title1,author,rating,language,description,image,uri,status } = req.body
-
-	// Simple validation
-	// if (!title1)
-	// 	return res
-	// 		.status(400)
-	// 		.json({ success: false, message: 'Missing username and/or password' })
-
 	try {
 		// Check for existing user
 		const book = await Book.findOne({ title1 })

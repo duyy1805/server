@@ -21,7 +21,7 @@ router.post('/',async (req, res) => {
 			status: status || 'TO LEARN',
 			user: req.userId
 		})
-
+		console.log(newPost.user)
 		await newPost.save()
 
 		res.json({ success: true, message: 'Happy learning!', post: newPost })

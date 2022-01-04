@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User')  
 
 router.post('/register', async (req, res) => {
-	const { username, password,title1,tiltle2,id,rating,language,description,uri } = req.body
+	const { username, password } = req.body
 
 	// Simple validation
 	if (!username || !password)
@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
 
 		// All good
 		const hashedPassword = await argon2.hash(password)
-		const newUser = new User({ username, password: hashedPassword,title1,tiltle2,id,rating,language,description,uri })
+		const newUser = new User({ username, password: hashedPassword})
 		await newUser.save()
 
 		// Return token

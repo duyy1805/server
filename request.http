@@ -2,7 +2,7 @@ POST http://localhost:5000/api/book/NewBook
 Content-Type: application/json
 
 {
-    "title1": "éo roll ra kayle d m nó",
+    "title1": "Buồn",
     "author": "Kayle top 8",
     "rating":4.9,
     "language": "English",
@@ -12,27 +12,24 @@ Content-Type: application/json
     "status":"false"
 }
 
-# {
-#     "title1": "Long tộc",
-#     "author": "Heimerdinger",
-#     "rating":4.5,
-#     "language": "English",
-#     "description":"Nhà khoa học Yordle tài năng mà quái dị - Giáo sư Cecil B. Heimerdinger – được tán dương là một trong những bộ óc tân tiến nhất Piltover từng chứng kiến. Làm việc không mệt mỏi đến mức ám ảnh, ông tạo nên những bí ẩn khiến các đồng nghiệp phải hổ thẹn suốt nhiều thập kỷ, và khao khát trả lời những câu hỏi hóc búa nhất của vũ trụ. Dù các lý thuyết nêu ra thường khó hiểu và nhiều tính riêng tư, Heimerdinger tin rằng tri thức có thể được chia sẻ, và nhiệt tình dạy dỗ tất cả những ai có nhu cầu.",
-#     "image":"https://lh3.googleusercontent.com/proxy/wMJ1lkGNPHgf4Nkld1Azef_7LYss3rBR86By-ae5JbcIZSDlADeGV8bkWsqf7Do5Wa7NDdhuvoJKa9YrNBlusWKFbS96-UncT0OKxxPuoGchDthB5wRXYqcIrLLmpsG2kasYKfkuIpDT1xvYl18uxqbYd2u7iO6kWw4NXOOoTQ",
-#     "uri":"",
-#     "status":"true"
-# }
+###
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
 
+{
+    "username" : "luna1",
+    "password" : "luna"
+}
 ###
 POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-    "username" : "dung",
+    "username" : "luna1",
     "password" : "luna"
 }
 
-###
+### 
 
 POST http://localhost:5000/api/posts
 Content-Type: application/json
