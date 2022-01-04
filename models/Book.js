@@ -33,6 +33,9 @@ const BookSchema = new Schema({
     status:{
       type: Boolean,
       require: true
+    },
+    user:{
+      type: Array,
     }
 })
 

@@ -27,6 +27,10 @@ router.post('/download', async (req,res)=>{
 	console.log(req.body);
 	var myquery = {title1 : title};
 	var newvalues = { status : true  };
+	Book.updateOne(
+		{title1: "Buồn"},
+		{$push: {user:"title"}}
+	)
 	try{
 		Book.updateOne(myquery,newvalues, async (err, res) => {
 			console.log("updated");
@@ -44,7 +48,7 @@ router.post('/autocomplete', async (req,res)=>{
 });
 
 router.post('/NewBook', async (req, res) => {
-	const {title1,author,rating,language,description,image,uri,status } = req.body
+	const {title1,author,rating,language,description,image,uri,status,user } = req.body
 	try {
 		// Check for existing user
 		const book = await Book.findOne({ title1 })
@@ -54,7 +58,7 @@ router.post('/NewBook', async (req, res) => {
 				.status(400)
 				.json({ success: false, message: 'Book already taken' })
 		// All good
-		const newBook = new Book({title1,author,rating,language,description,image,uri,status })
+		const newBook = new Book({title1,author,rating,language,description,image,uri,status,user })
 		await newBook.save()
 		res.json({ success: true, message: 'Add a new book!', book: newBook })
 	} catch (error) {
