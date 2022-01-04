@@ -27,11 +27,14 @@ router.post('/download', async (req,res)=>{
 	console.log(req.body);
 	var myquery = {title1 : title};
 	var newvalues = { status : true  };
-	Book.updateOne(
-		{title1: "Buồn"},
-		{$push: {user:"title"}}
-	)
+	// Book.updateOne(
+	// 	{title1: "Buồn"},
+	// 	{$push: {user:"title"}}
+	// );
 	try{
+		Book.updateOne({title1: "Buồn"},{$push: {user:"title"}}, async (err, res) => {
+			console.log("updated");
+		});
 		Book.updateOne(myquery,newvalues, async (err, res) => {
 			console.log("updated");
 		});
