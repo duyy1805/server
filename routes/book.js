@@ -1,26 +1,23 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const Book = require('../models/Book')  
+const Book = require("../models/Book");
 
-router.get('/show',(req,res,next)=>{
-	Book.find({})
-		.then((books) => {
-			books =  books.map((book) => book.toObject());
-			res.send(books)
-		})
-		.catch(next);
-	
+router.get("/show", (req, res, next) => {
+    Book.find({})
+        .then((books) => {
+            books = books.map((book) => book.toObject());
+            res.send(books);
+        })
+        .catch(next);
 });
 
-router.get('/show/downloaded',(req,res,next)=>{
-	Book.find({status :true})
-		.then((books) => {
-			books =  books.map((book) => book.toObject());
-			res.send(books)
-		})
-		// .catch(next);
-	
+router.get("/show/downloaded", (req, res, next) => {
+    Book.find({ status: true }).then((books) => {
+        books = books.map((book) => book.toObject());
+        res.send(books);
+    });
+    // .catch(next);
 });
 router.post('/download', async (req,res)=>{
 	const {title} = req.body;
@@ -41,13 +38,12 @@ router.post('/download', async (req,res)=>{
 		}	catch(error){}
 });
 
-router.post('/autocomplete', async (req,res)=>{
-	const {title} = req.body;
+router.post("/autocomplete", async (req, res) => {
+    const { title } = req.body;
 
-	Book.find({ title1 : { $regex: title, $options: 'i' } })
-		.then((books) => {
-			res.send(books)
-		})
+    Book.find({ title1: { $regex: title, $options: "i" } }).then((books) => {
+        res.send(books);
+    });
 });
 
 router.post('/NewBook', async (req, res) => {
@@ -70,4 +66,4 @@ router.post('/NewBook', async (req, res) => {
 	}
 })
 
-module.exports = router
+module.exports = router;

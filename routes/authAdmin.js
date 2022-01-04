@@ -3,10 +3,10 @@ const router = express.Router();
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 const { tryCatch } = require("../middleware/errorHandle");
-const User = require("../models/User");
+const Admin = require("../models/Admin");
 const { requireLogin } = require("../middleware/auth");
 const controller = require("../controller/auth.controller");
-// router.post("/", requireLogin, tryCatch(controller.auth));
+
 router.post("/register", async (req, res) => {
     const { username, password } = req.body;
 
@@ -19,16 +19,16 @@ router.post("/register", async (req, res) => {
 
     try {
         // Check for existing user
-        const user = await User.findOne({ username });
+        const admin = await Admin.findOne({ username });
 
-        if (user)
+        if (admin)
             return res
                 .status(400)
                 .json({ success: false, message: "Username already taken" });
 
         // All good
         const hashedPassword = await argon2.hash(password);
-        const newUser = new User({
+        const newAdmin = new Admin({
             username,
             password: hashedPassword,
             // title1,
@@ -39,15 +39,15 @@ router.post("/register", async (req, res) => {
             // description,
             // uri,
         });
-        await newUser.save();
+        await newAdmin.save();
 
         // Return token
         const accessToken = jwt.sign(
-            { userId: newUser._id },
+            { adminId: newAdmin._id },
             process.env.ACCESS_TOKEN_SECRET
         );
 
-        res.send({ accessToken, user });
+        res.send({ accessToken, newAdmin });
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -57,7 +57,6 @@ router.post("/register", async (req, res) => {
     }
 });
 
-// login
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
@@ -69,31 +68,27 @@ router.post("/login", async (req, res) => {
 
     try {
         //cseck for existing user
-        const user = await User.findOne({ username });
-        if (!user) {
+        const admin = await Admin.findOne({ username });
+        if (!admin)
             return res
                 .status(400)
                 .json({ success: false, message: "incorrect u" });
-        } else {
-            const passwordValid = await argon2.verify(user.password, password);
-            if (!passwordValid)
-                return res
-                    .status(400)
-                    .json({ success: false, message: "incorrect p" });
-            else {
-                const accessToken = jwt.sign(
-                    { userId: user._id },
-                    process.env.ACCESS_TOKEN_SECRET
-                );
-                const id = jwt.verify(
-                    accessToken,
-                    process.env.ACCESS_TOKEN_SECRET
-                );
-                const idUser = id.userId;
-                res.send({ accessToken, user });
-            }
-        }
+
         // username found
+        const passwordValid = await argon2.verify(admin.password, password);
+        if (!passwordValid)
+            return res
+                .status(400)
+                .json({ success: false, message: "incorrect p" });
+
+        // Return token
+        const accessToken = jwt.sign(
+            { adminId: admin._id },
+            process.env.ACCESS_TOKEN_SECRET
+        );
+        const id = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+        const idAdmin = id.adminId;
+        res.send({ accessToken, admin, idAdmin });
     } catch (error) {
         console.log(error);
         res.status(500).json({

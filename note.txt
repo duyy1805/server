@@ -1,0 +1,4 @@
+Khi đăng nhập thành công , chuyển hướng vào trang home với param là username;
+1.Trong DB có 1 collection với key là username và id sách đã tải 
+Khi không đăng nhập thì user= null . không thể tải sách
+
