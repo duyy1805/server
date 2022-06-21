@@ -12,15 +12,27 @@ router.get("/show", (req, res, next) => {
         .catch(next);
 });
 
-router.get("/show/downloaded", (req, res, next) => {
-    Book.find({ status: true }).then((books) => {
+router.post("/show/post", (req, res, next) => {
+	const {user} = req.body;
+	console.log(user);
+    Book.find({ user: user }).then((books) => {
+        books = books.map((book) => book.toObject());
+        res.send(books);
+    });
+    // .catch(next);
+});
+
+router.post("/show/downloaded", (req, res, next) => {
+	const {username} = req.body;
+	console.log(username);
+    Book.find({ user: username }).then((books) => {
         books = books.map((book) => book.toObject());
         res.send(books);
     });
     // .catch(next);
 });
 router.post('/download', async (req,res)=>{
-	const {title} = req.body;
+	const {title,username} = req.body;
 	console.log(req.body);
 	var myquery = {title1 : title};
 	var newvalues = { status : true  };
@@ -29,7 +41,7 @@ router.post('/download', async (req,res)=>{
 	// 	{$push: {user:"title"}}
 	// );
 	try{
-		Book.updateOne({title1: "Buồn"},{$push: {user:"title"}}, async (err, res) => {
+		Book.updateOne(myquery,{$push: {user: username}}, async (err, res) => {
 			console.log("updated");
 		});
 		Book.updateOne(myquery,newvalues, async (err, res) => {
