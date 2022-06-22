@@ -72,8 +72,12 @@ POST  http://localhost:5000/api/book/show/downloaded
 Content-Type: application/json
 
 ###
-GET http://localhost:5000/api/book/autocomplete
+POST  http://localhost:5000/api/book/autocomplete
 Content-Type: application/json
+
+{
+    "title" : "b"
+}
 
 ###
 POST  http://localhost:5000/api/book/download
