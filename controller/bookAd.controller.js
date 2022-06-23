@@ -10,13 +10,16 @@ getBook = async (req, res) => {
 };
 saveBook = async (req, res) => {
     const execute = await bookAdService.saveBook(req.body);
+    res.send(execute)
 };
 delBook = async (req, res) => {
     const { _id } = req.body;
     const execute = await bookAdService.delBook(_id);
+     res.send(execute)
 };
 addBook = async (req, res) => {
     const execute = await bookAdService.addBook(req.body);
+    res.send(execute)
 };
 
 module.exports = { getList, getBook, saveBook, delBook, addBook };

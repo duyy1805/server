@@ -12,16 +12,6 @@ router.get("/show", (req, res, next) => {
         .catch(next);
 });
 
-router.post("/show/post", (req, res, next) => {
-	const {user} = req.body;
-	console.log(user);
-    Book.find({ user: user }).then((books) => {
-        books = books.map((book) => book.toObject());
-        res.send(books);
-    });
-    // .catch(next);
-});
-
 router.post("/show/downloaded", (req, res, next) => {
 	const {username} = req.body;
 	console.log(username);
@@ -31,7 +21,7 @@ router.post("/show/downloaded", (req, res, next) => {
     });
     // .catch(next);
 });
-router.post('/download', async (req,res)=>{
+router.get('/download', async (req,res)=>{
 	const {title,username} = req.body;
 	console.log(req.body);
 	var myquery = {title1 : title};
